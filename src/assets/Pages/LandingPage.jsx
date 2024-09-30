@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LandingPage(){
 
@@ -10,25 +12,38 @@ export default function LandingPage(){
     const navigate = useNavigate();
 
     // axios.defaults.withCredentials = true
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('https://filter-be.vercel.app/user/login', { username, password})
-        .then(response => {
-            const username = jwtDecode(response.data.token)
-            localStorage.setItem("username", username.username)
-            alert("Berhasil Login");
-            navigate('/filter-app');
-        }).catch(err => {
-            if (err.response && err.response.data.message) {
-                alert(err.response.data.message); 
+        // axios.post('https://filter-be.vercel.app/user/login', { username, password})
+        // // .then(response => {
+        // //     const username = jwtDecode(response.data.token)
+        // //     localStorage.setItem("username", username.username)
+        // //     alert("Berhasil Login");
+        // //     navigate('/filter-app');
+        // // })
+        try {
+            const response = await toast.promise(
+              axios.post('https://filter-be.vercel.app/user/login', { username, password }),
+              {
+                pending: 'Logging in...',
+                success: 'Berhasil Login!',
+                error: 'Failed to Login'
+              }
+            );
+      
+            setTimeout(() => {
+              const username = jwtDecode(response.data.token);
+              localStorage.setItem("username", username.username);
+              navigate('/lutfiscript');
+            }, 2000);
+        }catch (error) {
+            if (error.response && error.response.data.message) {
+              toast.error(error.response.data.message);
             } else {
-                alert("Terjadi kesalahan saat login");
-                setUsername("")
-                setPassword("")
+              toast.error("An error occurred while logging in");
             }
-            navigate('/');
-            console.log(err)
-        });
+            console.error(error);
+          }
     }
 
     return (
@@ -55,6 +70,7 @@ export default function LandingPage(){
 
             </div>
         </div>
+        <ToastContainer position="top-center" />
         </>
     )
 }
