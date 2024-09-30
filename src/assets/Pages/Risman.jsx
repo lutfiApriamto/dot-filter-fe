@@ -9,7 +9,7 @@ export default function Risman(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/user/register', {  username, password })
+        axios.post('https://filter-be.vercel.app/user/register', {  username, password })
             .then(response => {
                 console.log(response);
                 alert("Data berhasil ditambahkan");

@@ -12,7 +12,7 @@ export default function LandingPage(){
     // axios.defaults.withCredentials = true
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/user/login', { username, password})
+        axios.post('https://filter-be.vercel.app/user/login', { username, password})
         .then(response => {
             console.log(response)
             const username = jwtDecode(response.data.token)

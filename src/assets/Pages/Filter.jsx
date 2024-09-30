@@ -13,7 +13,7 @@ export default function Filter(){
     
         setLoading(true);
         try {
-          const response = await fetch('http://localhost:3000/user/upload', {
+          const response = await fetch('https://filter-be.vercel.app/user/upload', {
             method: 'POST',
             body: formData,
           });

@@ -14,7 +14,7 @@ export default function Navbar() {
           if (username) {
             // try {
             //   setUsername(username);
-            //   const response = await axios.get(`http://localhost:3000/auth/getUserByUsername?username=${username}`);
+            //   const response = await axios.get(`https://filter-be.vercel.app/auth/getUserByUsername?username=${username}`);
             //   setUserId(response.data._id)
             // } catch (error) {
             //   console.error("Error fetching user data", error);
@@ -34,7 +34,7 @@ export default function Navbar() {
       const handleLogout = () => {
         localStorage.removeItem("token")
         localStorage.removeItem("username")
-        axios.get('http://localhost:3000/user/logout')
+        axios.get('https://filter-be.vercel.app/user/logout')
         .then(res => {
           if(res.data.status){
             navigate('/')
