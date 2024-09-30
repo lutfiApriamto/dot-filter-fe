@@ -14,7 +14,6 @@ export default function LandingPage(){
         e.preventDefault();
         axios.post('https://filter-be.vercel.app/user/login', { username, password})
         .then(response => {
-            console.log(response)
             const username = jwtDecode(response.data.token)
             localStorage.setItem("username", username.username)
             alert("Berhasil Login");

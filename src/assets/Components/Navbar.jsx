@@ -32,7 +32,6 @@ export default function Navbar() {
         setIsOpen(!isOpen); // Toggle untuk buka/tutup menu
     };
       const handleLogout = () => {
-        localStorage.removeItem("token")
         localStorage.removeItem("username")
         axios.get('https://filter-be.vercel.app/user/logout')
         .then(res => {
